@@ -1,14 +1,12 @@
 package overtrack
 
 import (
-	"net/http"
-
 	"github.com/gorilla/mux"
+
+	"github.com/triggity/overtrack/handlers"
 )
 
 func Server(router *mux.Router) {
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello!"))
-	})
+	router.HandleFunc("/", handlers.Home)
+	router.HandleFunc("/version", handlers.Version)
 }
