@@ -1,0 +1,15 @@
+{
+	"ImportPath": "github.com/triggity/overtrack",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.5.0-6-g7625a85",
+			"Rev": "7625a85c14e615274a4ee4bc8654f72310a563e4"
+		}
+	]
+}
