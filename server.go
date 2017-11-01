@@ -3,6 +3,8 @@ package overtrack
 import (
 	"net/http"
 
+	"gopkg.in/olivere/elastic.v5"
+
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/gorilla/mux"
@@ -11,7 +13,9 @@ import (
 	"github.com/triggity/overtrack/handlers"
 )
 
-func Server(router *mux.Router) {
+func Server(router *mux.Router, client *elastic.Client) {
+
+	mapsHandler := handlers.NewGameTypesHandler(client)
 
 	routes := []struct {
 		Route   string
@@ -20,6 +24,8 @@ func Server(router *mux.Router) {
 	}{
 		{"/", handlers.Home, "home"},
 		{"/version", handlers.Version, "version"},
+		{"/v1/maps", mapsHandler.List, "getMaps"},
+		{"/v1/maps/{name}", mapsHandler.GetByName, "getMap"},
 	}
 	for _, r := range routes {
 		router.HandleFunc(r.Route, prometheus.InstrumentHandlerFunc(r.Name, r.Handler))
