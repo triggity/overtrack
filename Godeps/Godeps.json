@@ -7,9 +7,31 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/gorilla/handlers",
+			"Comment": "v1.2.1-1-ga4d79d4",
+			"Rev": "a4d79d4487c2430a17d9dc8a1f74d1a6ed6908ca"
+		},
+		{
 			"ImportPath": "github.com/gorilla/mux",
 			"Comment": "v1.5.0-6-g7625a85",
 			"Rev": "7625a85c14e615274a4ee4bc8654f72310a563e4"
+		},
+		{
+			"ImportPath": "github.com/sirupsen/logrus",
+			"Comment": "v1.0.3-11-g89742ae",
+			"Rev": "89742aefa4b206dcf400792f3bd35b542998eb3b"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ssh/terminal",
+			"Rev": "bd6f299fb381e4c3393d1c4b1f0b94f5e77650c8"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "95c6576299259db960f6c5b9b69ea52422860fce"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/windows",
+			"Rev": "95c6576299259db960f6c5b9b69ea52422860fce"
 		}
 	]
 }

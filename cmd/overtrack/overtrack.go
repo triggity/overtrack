@@ -2,23 +2,29 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"log"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
+
 	"github.com/triggity/overtrack"
 )
 
 var (
-	a = flag.String("a", "d", "e")
+	address = flag.String("address", ":8000", "address to listen on")
 )
 
 func main() {
 	flag.Parse()
-	fmt.Printf("hello there! %s", *a)
+
 	r := mux.NewRouter()
 	overtrack.Server(r)
-	log.Fatal(http.ListenAndServe(":8000", r))
+	w := log.New().Writer()
+	defer w.Close()
+	loggedHandler := handlers.LoggingHandler(w, r)
+
+	log.Infof("starting overtrack at %s", *address)
+	log.Fatal(http.ListenAndServe(*address, loggedHandler))
 
 }

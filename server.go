@@ -7,6 +7,7 @@ import (
 )
 
 func Server(router *mux.Router) {
+
 	router.HandleFunc("/", handlers.Home)
 	router.HandleFunc("/version", handlers.Version)
 }
