@@ -11,7 +11,7 @@ import (
 )
 
 type GameMapsHandler struct {
-	dao models.GameMapDao
+	dao *models.GameMapDao
 }
 
 func NewGameTypesHandler(client *elastic.Client) *GameMapsHandler {

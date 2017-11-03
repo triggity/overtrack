@@ -5,6 +5,7 @@ import (
 	"errors"
 	"reflect"
 
+	"github.com/triggity/overtrack/errs"
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
@@ -21,8 +22,8 @@ type GameMapDao struct {
 	client *elastic.Client
 }
 
-func NewGameMapDao(client *elastic.Client) GameMapDao {
-	return GameMapDao{client}
+func NewGameMapDao(client *elastic.Client) *GameMapDao {
+	return &GameMapDao{client}
 }
 
 func (g *GameMapDao) GetByName(ctx context.Context, name string) (GameMap, error) {
@@ -39,7 +40,7 @@ func (g *GameMapDao) GetByName(ctx context.Context, name string) (GameMap, error
 		}
 		return result, errors.New("Trouble deserializing gamemap")
 	}
-	return result, nil
+	return result, errs.ErrorNotFound
 
 }
 
@@ -56,6 +57,9 @@ func (g *GameMapDao) List(ctx context.Context) ([]GameMap, error) {
 			return nil, errors.New("Trouble deserializing gamemap")
 		}
 		maps = append(maps, t)
+	}
+	if len(maps) == 0 {
+		return nil, errs.ErrorNotFound
 	}
 
 	return maps, nil
