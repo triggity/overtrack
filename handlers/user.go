@@ -45,7 +45,6 @@ func (u *UserHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 	}
 	users, err := u.dao.GetByID(r.Context(), id)
 	if err != nil {
-		log.Info("Ohhh no!", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
 		return
