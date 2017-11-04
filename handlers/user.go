@@ -31,9 +31,7 @@ func (u *UserHandler) List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	s, _ := json.Marshal(struct {
-		Users []models.User `json:"users"`
-	}{users})
+	s, _ := json.Marshal(struct { Users []models.User `json:"users"`}{users})
 	w.Write(s)
 }
 
@@ -53,9 +51,7 @@ func (u *UserHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	s, err := json.Marshal(struct {
-		User models.User `json:"user"`
-	}{users})
+	s, err := json.Marshal(struct{ User models.User `json:"user"` }{users})
 	if err != nil {
 		log.Info("EEEEEEEE", err)
 	}
