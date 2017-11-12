@@ -15,7 +15,7 @@ import (
 
 var (
 	address = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8080")), "address to listen on")
-	dbUrl   = flag.String("dbUrl", fmt.Sprintf("DATABASE_URL", "postgres://postgres@localhost:5432/postgres"), "database connection string")
+	dbURL   = flag.String("dbUrl", fmt.Sprintf("DATABASE_URL", "postgres://postgres@localhost:5432/postgres"), "database connection string")
 )
 
 func getEnv(key string, backup string) string {
@@ -28,7 +28,7 @@ func getEnv(key string, backup string) string {
 
 func main() {
 	flag.Parse()
-	db, err := sqlx.Open("postgres", *dbUrl)
+	db, err := sqlx.Open("postgres", *dbURL)
 	if err != nil {
 		panic(err)
 	}
