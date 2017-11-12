@@ -11,18 +11,18 @@ import (
 )
 
 type Game struct {
-	UserID     int               `json:"user_id",db:"user_id"`
-	Map        string            `json:"map",db:"map"`
-	StartTime  time.Time         `json:"start_time,string",db:"start_time"`
-	GameType   GameType          `json:"game_type, string",db:"game_type"`
-	GroupSize  int               `json:"group_size",db:"group_size"`
-	IsSeason   bool              `json:"is_placement",db:"is_placement"`
-	Season     int               `json:"season",db:"season"`
-	EndSR      int               `json:"end_sr, omit_empty",db:"end_sr"`
-	BeginSR    int               `json:"begin_sr,omit_empty",db:"begin_sr"`
-	Result     Result            `json:"result,string",db:"result"`
-	Characters []CharacterResult `json:"characters",db:"characters"`
-	Stats      Stats             `json:"stats",db:"stats"`
+	UserID     int               `json:"user_id" db:"user_id"`
+	Map        string            `json:"map" db:"map"`
+	StartTime  time.Time         `json:"start_time,string" db:"start_time"`
+	GameType   GameType          `json:"game_type, string" db:"game_type"`
+	GroupSize  int               `json:"group_size" db:"group_size"`
+	IsSeason   bool              `json:"is_placement" db:"is_placement"`
+	Season     int               `json:"season" db:"season"`
+	EndSR      int               `json:"end_sr,omit_empty" db:"end_sr"`
+	BeginSR    int               `json:"begin_sr,omit_empty" db:"begin_sr"`
+	Result     Result            `json:"result,string" db:"result"`
+	Characters []CharacterResult `json:"characters" db:"characters"`
+	Stats      Stats             `json:"stats" db:"stats"`
 }
 
 type GameDao struct {

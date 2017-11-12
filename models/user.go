@@ -14,11 +14,11 @@ import (
 )
 
 type User struct {
-	ID         int    `json:"id",db:"id"`
-	FirstName  string `json:"first_name",db:"first_name"`
-	LastName   string `json:"last_name",db:"last_name"`
-	Email      string `json:"email",db:"email"`
-	BlizzardId string `json:"blizzard_id",db:"blizzard_id"`
+	ID         int    `json:"id" db:"id"`
+	FirstName  string `json:"first_name" db:"first_name"`
+	LastName   string `json:"last_name" db:"last_name"`
+	Email      string `json:"email" db:"email"`
+	BlizzardID string `json:"blizzard_id" db:"blizzard_id"`
 }
 
 type UserDao struct {

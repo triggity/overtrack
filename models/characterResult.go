@@ -11,14 +11,14 @@ type CharacterStats interface {
 }
 
 type CharacterResult struct {
-	Name  string         `json:"name"`
-	Stats CharacterStats `json:"stats"`
+	Name  string         `json:"name" db:"name"`
+	Stats CharacterStats `json:"stats" db:"stats"`
 }
 
 // used for unmarshaling to specific character's results
 type characterResultRaw struct {
-	Name  string          `json:"name"`
-	Stats json.RawMessage `json:"stats"`
+	Name  string          `json:"name" db:"name"`
+	Stats json.RawMessage `json:"stats" db:"stats"`
 }
 
 func (c *CharacterResult) UnmarshalJSON(d []byte) error {
@@ -43,8 +43,8 @@ func (c *CharacterResult) UnmarshalJSON(d []byte) error {
 
 type CharacterResultOrisa struct {
 	*Stats
-	CharacterClass CharacterClass `json:"class"`
-	DamagedBlocked int            `json:"damage_blocked"`
+	CharacterClass CharacterClass `json:"class" db:"class"`
+	DamagedBlocked int            `json:"damage_blocked" db:"damage_blocked"`
 }
 
 func (o *CharacterResultOrisa) CharacterStats() map[string]float32 {
@@ -55,8 +55,8 @@ func (o *CharacterResultOrisa) CharacterStats() map[string]float32 {
 
 type CharacterResultReinhardt struct {
 	*Stats
-	CharacterClass CharacterClass `json:"class"`
-	DamagedBlocked int            `json:"damage_blocked"`
+	CharacterClass CharacterClass `json:"class" db:"class"`
+	DamagedBlocked int            `json:"damage_blocked" db:"damage_blocked"`
 }
 
 func (r *CharacterResultReinhardt) CharacterStats() map[string]float32 {
