@@ -42,7 +42,7 @@ func getDB() *sqlx.DB {
 		log.Panic(err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
-		fmt.Sprint("file://%s", *migrationsPath),
+		fmt.Sprintf("file://%s", *migrationsPath),
 		"postgres", driver)
 
 	if err != nil {
