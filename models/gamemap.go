@@ -24,8 +24,8 @@ type GameMapDao struct {
 	sqlClient *sqlx.DB
 }
 
-func NewGameMapDao(client *elastic.Client) *GameMapDao {
-	return &GameMapDao{client, nil}
+func NewGameMapDao(client *elastic.Client, db *sqlx.DB) *GameMapDao {
+	return &GameMapDao{client, db}
 }
 
 func (g *GameMapDao) GetByName(ctx context.Context, name string) (GameMap, error) {

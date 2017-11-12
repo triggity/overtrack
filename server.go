@@ -3,21 +3,21 @@ package main
 import (
 	"net/http"
 
-	"gopkg.in/olivere/elastic.v5"
-
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
 	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"gopkg.in/olivere/elastic.v5"
 
 	"github.com/triggity/overtrack/handlers"
 )
 
-func Server(router *mux.Router, client *elastic.Client) {
+func Server(router *mux.Router, client *elastic.Client, db *sqlx.DB) {
 
-	mapsHandler := handlers.NewGameTypesHandler(client)
-	userHandler := handlers.NewUserHandler(client)
-	gameHandler := handlers.NewGameHandler(client)
+	mapsHandler := handlers.NewGameTypesHandler(client, db)
+	userHandler := handlers.NewUserHandler(client, db)
+	gameHandler := handlers.NewGameHandler(client, db)
 
 	routes := []struct {
 		Route   string

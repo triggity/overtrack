@@ -7,6 +7,7 @@ import (
 	"gopkg.in/olivere/elastic.v5"
 
 	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
 	"github.com/triggity/overtrack/models"
 )
 
@@ -14,9 +15,9 @@ type GameMapsHandler struct {
 	dao *models.GameMapDao
 }
 
-func NewGameTypesHandler(client *elastic.Client) *GameMapsHandler {
+func NewGameTypesHandler(client *elastic.Client, db *sqlx.DB) *GameMapsHandler {
 	return &GameMapsHandler{
-		models.NewGameMapDao(client),
+		models.NewGameMapDao(client, db),
 	}
 }
 

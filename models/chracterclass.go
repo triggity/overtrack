@@ -12,7 +12,7 @@ const (
 	Suppport
 )
 
-func (r Result) String() string {
+func (r CharacterClass) String() string {
 	name := []string{"attack", "defense", "tank", "support"}
 	i := uint8(r)
 	switch {

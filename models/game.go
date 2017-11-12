@@ -31,8 +31,8 @@ type GameDao struct {
 	index     string
 }
 
-func NewGameDao(client *elastic.Client) *GameDao {
-	return &GameDao{client, nil, "ow"}
+func NewGameDao(client *elastic.Client, sqlClient *sqlx.DB) *GameDao {
+	return &GameDao{client, sqlClient, "ow"}
 }
 
 func (g *GameDao) GetByUser(ctx context.Context, id int) ([]Game, error) {

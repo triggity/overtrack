@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/olivere/elastic.v5"
 
@@ -16,9 +17,9 @@ type UserHandler struct {
 	dao *models.UserDao
 }
 
-func NewUserHandler(client *elastic.Client) *UserHandler {
+func NewUserHandler(client *elastic.Client, db *sqlx.DB) *UserHandler {
 	return &UserHandler{
-		models.NewUserDao(client),
+		models.NewUserDao(client, db),
 	}
 }
 
@@ -31,7 +32,9 @@ func (u *UserHandler) List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	s, _ := json.Marshal(struct { Users []models.User `json:"users"`}{users})
+	s, _ := json.Marshal(struct {
+		Users []models.User `json:"users"`
+	}{users})
 	w.Write(s)
 }
 
@@ -50,7 +53,9 @@ func (u *UserHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	s, err := json.Marshal(struct{ User models.User `json:"user"` }{users})
+	s, err := json.Marshal(struct {
+		User models.User `json:"user"`
+	}{users})
 	if err != nil {
 		log.Info("EEEEEEEE", err)
 	}

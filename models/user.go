@@ -27,8 +27,8 @@ type UserDao struct {
 	index     string
 }
 
-func NewUserDao(client *elastic.Client) *UserDao {
-	return &UserDao{client, nil, "ow"}
+func NewUserDao(client *elastic.Client, db *sqlx.DB) *UserDao {
+	return &UserDao{client, db, "ow"}
 }
 
 func (u *UserDao) GetByID(ctx context.Context, id int) (User, error) {
