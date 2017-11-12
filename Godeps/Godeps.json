@@ -45,6 +45,31 @@
 			"Rev": "b609790bd85edf8e9ab7e0f8912750a786177bcf"
 		},
 		{
+			"ImportPath": "github.com/mattes/migrate",
+			"Comment": "v3.0.1-87-g69472d5",
+			"Rev": "69472d5f5cdca0fb2766d8d86f63cb2e78e1d869"
+		},
+		{
+			"ImportPath": "github.com/mattes/migrate/database",
+			"Comment": "v3.0.1-87-g69472d5",
+			"Rev": "69472d5f5cdca0fb2766d8d86f63cb2e78e1d869"
+		},
+		{
+			"ImportPath": "github.com/mattes/migrate/database/postgres",
+			"Comment": "v3.0.1-87-g69472d5",
+			"Rev": "69472d5f5cdca0fb2766d8d86f63cb2e78e1d869"
+		},
+		{
+			"ImportPath": "github.com/mattes/migrate/source",
+			"Comment": "v3.0.1-87-g69472d5",
+			"Rev": "69472d5f5cdca0fb2766d8d86f63cb2e78e1d869"
+		},
+		{
+			"ImportPath": "github.com/mattes/migrate/source/file",
+			"Comment": "v3.0.1-87-g69472d5",
+			"Rev": "69472d5f5cdca0fb2766d8d86f63cb2e78e1d869"
+		},
+		{
 			"ImportPath": "github.com/matttproud/golang_protobuf_extensions/pbutil",
 			"Comment": "v1.0.0-2-gc12348c",
 			"Rev": "c12348ce28de40eed0136aa2b644d0ee0650e56c"

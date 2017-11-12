@@ -6,16 +6,19 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/jmoiron/sqlx"
-
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
+	"github.com/mattes/migrate"
+	"github.com/mattes/migrate/database/postgres"
+	_ "github.com/mattes/migrate/source/file"
 	log "github.com/sirupsen/logrus"
 )
 
 var (
 	address = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8080")), "address to listen on")
-	dbURL   = flag.String("dbUrl", fmt.Sprintf("DATABASE_URL", "postgres://postgres@localhost:5432/postgres"), "database connection string")
+	dbURL   = flag.String("dbUrl", getEnv("DATABASE_URL", "postgres://postgres@127.0.0.1:5432/postgres"), "database connection string")
 )
 
 func getEnv(key string, backup string) string {
@@ -28,9 +31,26 @@ func getEnv(key string, backup string) string {
 
 func main() {
 	flag.Parse()
+	log.Infof("connecting to postgres at %s", *dbURL)
 	db, err := sqlx.Open("postgres", *dbURL)
 	if err != nil {
 		panic(err)
+	}
+
+	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	m, err := migrate.NewWithDatabaseInstance(
+		"file:///Users/michael/code/go/src/github.com/triggity/overtrack/migrations",
+		"postgres", driver)
+
+	if err != nil {
+		panic(err)
+	}
+	if err := m.Up(); err != nil {
+		log.Fatal(err)
 	}
 
 	r := mux.NewRouter()
