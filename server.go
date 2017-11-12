@@ -1,4 +1,4 @@
-package overtrack
+package main
 
 import (
 	"net/http"
