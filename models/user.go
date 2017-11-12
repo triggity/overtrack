@@ -1,20 +1,13 @@
 package models
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
-	"reflect"
-	"strconv"
-
 	"github.com/jmoiron/sqlx"
 
-	"github.com/triggity/overtrack/errs"
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 type User struct {
-	ID         int    `json:"id" db:"id"`
+	ID         int    `json:"id" db:"user_id"`
 	FirstName  string `json:"first_name" db:"first_name"`
 	LastName   string `json:"last_name" db:"last_name"`
 	Email      string `json:"email" db:"email"`
@@ -23,45 +16,22 @@ type User struct {
 
 type UserDao struct {
 	client    *elastic.Client
-	sqlClient *sqlx.DB
-	index     string
+	db        *sqlx.DB
+	tableName string
 }
 
 func NewUserDao(client *elastic.Client, db *sqlx.DB) *UserDao {
-	return &UserDao{client, db, "ow"}
+	return &UserDao{client, db, "users"}
 }
 
-func (u *UserDao) GetByID(ctx context.Context, id int) (User, error) {
-	var result User
-	resp, err := u.client.Get().Index(u.index).Type("users").Id(strconv.Itoa(id)).Do(ctx)
-	if err != nil {
-		return result, err
-	}
-	if !resp.Found {
-		return result, errs.ErrorNotFound
-	}
-	err = json.Unmarshal(*resp.Source, &result)
-	if err != nil {
-		return result, err
-	}
-	result.ID = id
-	return result, err
+func (u *UserDao) GetByID(id int) (User, error) {
+	user := User{}
+	err := u.db.Get(&user, "SELECT * FROM ? WHERE user_id=? ORDER BY last_updated DESC LIMIT 1", u.tableName, id)
+	return user, err
 }
 
-func (u *UserDao) List(ctx context.Context) ([]User, error) {
-	resp, err := u.client.Search().Index(u.index).Type("users").Do(ctx)
-	if err != nil {
-		return nil, err
-	}
-	var users []User
-	for _, item := range resp.Each(reflect.TypeOf(User{})) {
-		var t User
-		var ok bool
-		if t, ok = item.(User); !ok {
-			return nil, errors.New("Trouble deserializing User")
-		}
-		users = append(users, t)
-	}
-
-	return users, nil
+func (u *UserDao) List() ([]User, error) {
+	users := []User{}
+	err := u.db.Select(&users, "SELECT * FROM ?", u.tableName)
+	return users, err
 }

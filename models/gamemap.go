@@ -1,17 +1,13 @@
 package models
 
 import (
-	"context"
-	"errors"
-	"reflect"
-
 	"github.com/jmoiron/sqlx"
-	"github.com/triggity/overtrack/errs"
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 // GameMap represents a game map
 type GameMap struct {
+	ID       int      `db:"id"`
 	Name     string   `json:"name" db:"name"`
 	FullName string   `json:"full_name" db:"full_name"`
 	City     string   `json:"city" db:"city"`
@@ -21,48 +17,21 @@ type GameMap struct {
 
 type GameMapDao struct {
 	client    *elastic.Client
-	sqlClient *sqlx.DB
+	db        *sqlx.DB
+	tableName string
 }
 
 func NewGameMapDao(client *elastic.Client, db *sqlx.DB) *GameMapDao {
-	return &GameMapDao{client, db}
+	return &GameMapDao{client, db, "maps"}
 }
 
-func (g *GameMapDao) GetByName(ctx context.Context, name string) (GameMap, error) {
-	var result GameMap
-	query := elastic.NewTermQuery("name", name)
-	resp, err := g.client.Search().Index("ow").Type("maps").Query(query).Do(ctx)
-	if err != nil {
-		return result, err
-	}
-	for _, item := range resp.Each(reflect.TypeOf(result)) {
-		var ok bool
-		if result, ok = item.(GameMap); ok {
-			return result, nil
-		}
-		return result, errors.New("Trouble deserializing gamemap")
-	}
-	return result, errs.ErrorNotFound
-
+func (g *GameMapDao) GetByName(name string) (GameMap, error) {
+	gameMap := GameMap{}
+	err := g.db.Get("SELECT * FROM ? WHERE name=?", g.tableName, name)
+	return gameMap, err
 }
 
-func (g *GameMapDao) List(ctx context.Context) ([]GameMap, error) {
-	resp, err := g.client.Search().Index("ow").Type("maps").Do(ctx)
-	if err != nil {
-		return nil, err
-	}
-	var maps []GameMap
-	for _, item := range resp.Each(reflect.TypeOf(GameMap{})) {
-		var t GameMap
-		var ok bool
-		if t, ok = item.(GameMap); !ok {
-			return nil, errors.New("Trouble deserializing gamemap")
-		}
-		maps = append(maps, t)
-	}
-	if len(maps) == 0 {
-		return nil, errs.ErrorNotFound
-	}
-
-	return maps, nil
+func (g *GameMapDao) List() ([]GameMap, error) {
+	gameMaps := []GameMap{}
+	err := g.db.Select("SELECT * FROM ?", g.tableName)
 }
