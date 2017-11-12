@@ -75,11 +75,6 @@
 			"Rev": "c12348ce28de40eed0136aa2b644d0ee0650e56c"
 		},
 		{
-			"ImportPath": "github.com/pkg/errors",
-			"Comment": "v0.8.0-7-gf15c970",
-			"Rev": "f15c970de5b76fac0b59abb32d62c17cc7bed265"
-		},
-		{
 			"ImportPath": "github.com/prometheus/client_golang/prometheus",
 			"Comment": "v0.9.0-pre1-11-g5cec1d0",
 			"Rev": "5cec1d0429b02e4323e042eb04dafdb079ddf568"
@@ -130,21 +125,6 @@
 		{
 			"ImportPath": "golang.org/x/sys/windows",
 			"Rev": "95c6576299259db960f6c5b9b69ea52422860fce"
-		},
-		{
-			"ImportPath": "gopkg.in/olivere/elastic.v5",
-			"Comment": "v5.0.53",
-			"Rev": "171ce647da4acfb30ffc99981d66d80bdea6bcee"
-		},
-		{
-			"ImportPath": "gopkg.in/olivere/elastic.v5/config",
-			"Comment": "v5.0.53",
-			"Rev": "171ce647da4acfb30ffc99981d66d80bdea6bcee"
-		},
-		{
-			"ImportPath": "gopkg.in/olivere/elastic.v5/uritemplates",
-			"Comment": "v5.0.53",
-			"Rev": "171ce647da4acfb30ffc99981d66d80bdea6bcee"
 		}
 	]
 }
