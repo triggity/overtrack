@@ -41,7 +41,7 @@ func getDB() *sqlx.DB {
 		log.Panic(err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
-		"file:///Users/michael/code/go/src/github.com/triggity/overtrack/migrations",
+		"file://migrations",
 		"postgres", driver)
 
 	if err != nil {
