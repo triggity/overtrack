@@ -21,12 +21,12 @@ func NewHeroDao(sqlClient *sqlx.DB) *HeroDao {
 
 func (h *HeroDao) GetHero(name string) (Hero, error) {
 	hero := Hero{}
-	err := h.db.Get("SELECT * FROM ? WHERE name=? LIMIT 1", h.tableName, name)
+	err := h.db.Get("SELECT * FROM ? WHERE name=? LIMIT 1;", h.tableName, name)
 	return hero, err
 }
 
 func (h *HeroDao) GetHeros() ([]Hero, error) {
 	heros := []Hero{}
-	err := h.db.Select("SELECT * FROM ?", h.tableName)
+	err := h.db.Select("SELECT * FROM ?;", h.tableName)
 	return heros, err
 }

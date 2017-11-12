@@ -15,22 +15,21 @@ type GameMap struct {
 }
 
 type GameMapDao struct {
-	db        *sqlx.DB
-	tableName string
+	db *sqlx.DB
 }
 
 func NewGameMapDao(db *sqlx.DB) *GameMapDao {
-	return &GameMapDao{db, "maps"}
+	return &GameMapDao{db}
 }
 
 func (g *GameMapDao) GetByName(name string) (GameMap, error) {
 	gameMap := GameMap{}
-	err := g.db.Get("SELECT * FROM ? WHERE name=? LIMIT 1", g.tableName, name)
+	err := g.db.Get(&gameMap, "SELECT * FROM maps WHERE name=$1 LIMIT 1", name)
 	return gameMap, err
 }
 
 func (g *GameMapDao) List() ([]GameMap, error) {
 	gameMaps := []GameMap{}
-	err := g.db.Select("SELECT * FROM ?", g.tableName)
+	err := g.db.Select(&gameMaps, "SELECT * FROM maps")
 	return gameMaps, err
 }

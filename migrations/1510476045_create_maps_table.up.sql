@@ -1,7 +1,7 @@
-CREATE TYPE game_type as ENUM ('escort', 'assult', 'hybrid', 'control');
+CREATE TYPE game_type as ENUM ('escort', 'assault', 'hybrid', 'control');
 
 CREATE TABLE maps (
-  id            integer unique,
+  id            SERIAL,
   name          varchar(40) unique,
   full_name     varchar(40),
   city          varchar(40),

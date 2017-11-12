@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
+	log "github.com/sirupsen/logrus"
 	"github.com/triggity/overtrack/models"
 )
 
@@ -22,6 +23,7 @@ func NewGameTypesHandler(db *sqlx.DB) *GameMapsHandler {
 func (g *GameMapsHandler) List(w http.ResponseWriter, r *http.Request) {
 	maps, err := g.dao.List()
 	if err != nil {
+		log.Info("failed to list maps ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
 		return
