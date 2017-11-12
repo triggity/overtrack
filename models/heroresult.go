@@ -43,8 +43,8 @@ func (c *CharacterResult) UnmarshalJSON(d []byte) error {
 
 type CharacterResultOrisa struct {
 	*Stats
-	CharacterClass CharacterClass `json:"class" db:"class"`
-	DamagedBlocked int            `json:"damage_blocked" db:"damage_blocked"`
+	HeroClass      HeroClass `json:"class" db:"class"`
+	DamagedBlocked int       `json:"damage_blocked" db:"damage_blocked"`
 }
 
 func (o *CharacterResultOrisa) CharacterStats() map[string]float32 {
@@ -55,8 +55,8 @@ func (o *CharacterResultOrisa) CharacterStats() map[string]float32 {
 
 type CharacterResultReinhardt struct {
 	*Stats
-	CharacterClass CharacterClass `json:"class" db:"class"`
-	DamagedBlocked int            `json:"damage_blocked" db:"damage_blocked"`
+	HeroClass      HeroClass `json:"class" db:"class"`
+	DamagedBlocked int       `json:"damage_blocked" db:"damage_blocked"`
 }
 
 func (r *CharacterResultReinhardt) CharacterStats() map[string]float32 {

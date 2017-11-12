@@ -2,8 +2,6 @@ package models
 
 import (
 	"github.com/jmoiron/sqlx"
-
-	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 type User struct {
@@ -15,13 +13,12 @@ type User struct {
 }
 
 type UserDao struct {
-	client    *elastic.Client
 	db        *sqlx.DB
 	tableName string
 }
 
-func NewUserDao(client *elastic.Client, db *sqlx.DB) *UserDao {
-	return &UserDao{client, db, "users"}
+func NewUserDao(db *sqlx.DB) *UserDao {
+	return &UserDao{db, "users"}
 }
 
 func (u *UserDao) GetByID(id int) (User, error) {

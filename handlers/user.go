@@ -7,7 +7,6 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
-	"gopkg.in/olivere/elastic.v5"
 
 	"github.com/gorilla/mux"
 	"github.com/triggity/overtrack/models"
@@ -17,14 +16,14 @@ type UserHandler struct {
 	dao *models.UserDao
 }
 
-func NewUserHandler(client *elastic.Client, db *sqlx.DB) *UserHandler {
+func NewUserHandler(db *sqlx.DB) *UserHandler {
 	return &UserHandler{
-		models.NewUserDao(client, db),
+		models.NewUserDao(db),
 	}
 }
 
 func (u *UserHandler) List(w http.ResponseWriter, r *http.Request) {
-	users, err := u.dao.List(r.Context())
+	users, err := u.dao.List()
 	if err != nil {
 		log.Info("Ohhh no!", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -46,7 +45,7 @@ func (u *UserHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-	users, err := u.dao.GetByID(r.Context(), id)
+	users, err := u.dao.GetByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))

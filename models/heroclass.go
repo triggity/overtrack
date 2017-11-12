@@ -2,17 +2,17 @@ package models
 
 import "strconv"
 
-type CharacterClass uint8
+type HeroClass uint8
 
 const (
-	_                     = iota
-	Attack CharacterClass = 1
+	_                = iota
+	Attack HeroClass = 1
 	Defense
 	Tank
 	Suppport
 )
 
-func (r CharacterClass) String() string {
+func (r HeroClass) String() string {
 	name := []string{"attack", "defense", "tank", "support"}
 	i := uint8(r)
 	switch {

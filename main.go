@@ -34,7 +34,7 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	Server(r, nil, db)
+	Server(r, db)
 	w := log.New().Writer()
 	defer w.Close()
 	loggedHandler := handlers.LoggingHandler(w, r)

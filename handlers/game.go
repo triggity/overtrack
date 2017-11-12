@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"gopkg.in/olivere/elastic.v5"
-
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/triggity/overtrack/models"
@@ -16,9 +14,9 @@ type GameHandler struct {
 	dao *models.GameDao
 }
 
-func NewGameHandler(client *elastic.Client, db *sqlx.DB) *GameHandler {
+func NewGameHandler(db *sqlx.DB) *GameHandler {
 	return &GameHandler{
-		models.NewGameDao(client, db),
+		models.NewGameDao(db),
 	}
 }
 
@@ -30,7 +28,7 @@ func (g *GameHandler) GetByUser(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-	maps, err := g.dao.GetByUser(r.Context(), id)
+	maps, err := g.dao.GetByUser(id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))

@@ -1,13 +1,9 @@
 package models
 
 import (
-	"context"
-	"errors"
-	"reflect"
 	"time"
 
 	"github.com/jmoiron/sqlx"
-	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 type Game struct {
@@ -26,29 +22,14 @@ type Game struct {
 }
 
 type GameDao struct {
-	client    *elastic.Client
-	sqlClient *sqlx.DB
-	index     string
+	db    *sqlx.DB
+	index string
 }
 
-func NewGameDao(client *elastic.Client, sqlClient *sqlx.DB) *GameDao {
-	return &GameDao{client, sqlClient, "ow"}
+func NewGameDao(db *sqlx.DB) *GameDao {
+	return &GameDao{db, "ow"}
 }
 
-func (g *GameDao) GetByUser(ctx context.Context, id int) ([]Game, error) {
-	query := elastic.NewTermQuery("user_id", id)
-	resp, err := g.client.Search().Index(g.index).Type("games").Query(query).Do(ctx)
-	if err != nil {
-		return nil, err
-	}
-	var games []Game
-	for _, item := range resp.Each(reflect.TypeOf(Game{})) {
-		var g Game
-		var ok bool
-		if g, ok = item.(Game); !ok {
-			return nil, errors.New("Trouble deserializing Game")
-		}
-		games = append(games, g)
-	}
-	return games, nil
+func (g *GameDao) GetByUser(id int) ([]Game, error) {
+	return []Game{}, nil
 }

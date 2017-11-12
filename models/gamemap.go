@@ -2,7 +2,6 @@ package models
 
 import (
 	"github.com/jmoiron/sqlx"
-	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 // GameMap represents a game map
@@ -16,22 +15,22 @@ type GameMap struct {
 }
 
 type GameMapDao struct {
-	client    *elastic.Client
 	db        *sqlx.DB
 	tableName string
 }
 
-func NewGameMapDao(client *elastic.Client, db *sqlx.DB) *GameMapDao {
-	return &GameMapDao{client, db, "maps"}
+func NewGameMapDao(db *sqlx.DB) *GameMapDao {
+	return &GameMapDao{db, "maps"}
 }
 
 func (g *GameMapDao) GetByName(name string) (GameMap, error) {
 	gameMap := GameMap{}
-	err := g.db.Get("SELECT * FROM ? WHERE name=?", g.tableName, name)
+	err := g.db.Get("SELECT * FROM ? WHERE name=? LIMIT 1", g.tableName, name)
 	return gameMap, err
 }
 
 func (g *GameMapDao) List() ([]GameMap, error) {
 	gameMaps := []GameMap{}
 	err := g.db.Select("SELECT * FROM ?", g.tableName)
+	return gameMaps, err
 }

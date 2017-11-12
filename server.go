@@ -8,16 +8,15 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"gopkg.in/olivere/elastic.v5"
 
 	"github.com/triggity/overtrack/handlers"
 )
 
-func Server(router *mux.Router, client *elastic.Client, db *sqlx.DB) {
+func Server(router *mux.Router, db *sqlx.DB) {
 
-	mapsHandler := handlers.NewGameTypesHandler(client, db)
-	userHandler := handlers.NewUserHandler(client, db)
-	gameHandler := handlers.NewGameHandler(client, db)
+	mapsHandler := handlers.NewGameTypesHandler(db)
+	userHandler := handlers.NewUserHandler(db)
+	gameHandler := handlers.NewGameHandler(db)
 
 	routes := []struct {
 		Route   string

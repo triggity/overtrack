@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"gopkg.in/olivere/elastic.v5"
-
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/triggity/overtrack/models"
@@ -15,14 +13,14 @@ type GameMapsHandler struct {
 	dao *models.GameMapDao
 }
 
-func NewGameTypesHandler(client *elastic.Client, db *sqlx.DB) *GameMapsHandler {
+func NewGameTypesHandler(db *sqlx.DB) *GameMapsHandler {
 	return &GameMapsHandler{
-		models.NewGameMapDao(client, db),
+		models.NewGameMapDao(db),
 	}
 }
 
 func (g *GameMapsHandler) List(w http.ResponseWriter, r *http.Request) {
-	maps, err := g.dao.List(r.Context())
+	maps, err := g.dao.List()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
@@ -35,7 +33,7 @@ func (g *GameMapsHandler) List(w http.ResponseWriter, r *http.Request) {
 
 func (g *GameMapsHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	maps, err := g.dao.GetByName(r.Context(), vars["name"])
+	maps, err := g.dao.GetByName(vars["name"])
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
