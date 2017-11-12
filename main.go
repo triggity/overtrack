@@ -17,8 +17,8 @@ import (
 )
 
 var (
-	address = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8080")), "address to listen on")
-	dbURL   = flag.String("dbUrl", getEnv("DATABASE_URL", "postgres://postgres@127.0.0.1:5432/postgres"), "database connection string")
+	address = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8000")), "address to listen on")
+	dbURL   = flag.String("dbUrl", getEnv("DATABASE_URL", "postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable"), "database connection string")
 )
 
 func getEnv(key string, backup string) string {
@@ -28,9 +28,7 @@ func getEnv(key string, backup string) string {
 	}
 	return value
 }
-
-func main() {
-	flag.Parse()
+func getDB() *sqlx.DB {
 	log.Infof("connecting to postgres at %s", *dbURL)
 	db, err := sqlx.Open("postgres", *dbURL)
 	if err != nil {
@@ -40,19 +38,25 @@ func main() {
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
 		"file:///Users/michael/code/go/src/github.com/triggity/overtrack/migrations",
 		"postgres", driver)
 
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
-	if err := m.Up(); err != nil {
-		log.Fatal(err)
+	err = m.Up()
+	if err != nil && err != migrate.ErrNoChange {
+		log.Panic(err)
 	}
+	return db
+}
 
+func main() {
+	flag.Parse()
+	db := getDB()
 	r := mux.NewRouter()
 	Server(r, db)
 	w := log.New().Writer()

@@ -1,4 +1,4 @@
-CREATE TYPE hero_class as ENUM ("attack", "defense", "tank", "support");
+CREATE TYPE hero_class as ENUM ('attack', 'defense', 'tank', 'support');
 
 CREATE TABLE heros (
     id      integer unique,
