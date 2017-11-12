@@ -7,24 +7,28 @@ import (
 	"reflect"
 	"strconv"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/triggity/overtrack/errs"
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 type User struct {
-	ID        int    `json:"id"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
+	ID         int    `json:"id",db:"id"`
+	FirstName  string `json:"first_name",db:"first_name"`
+	LastName   string `json:"last_name",db:"last_name"`
+	Email      string `json:"email",db:"email"`
+	BlizzardId string `json:"blizzard_id",db:"blizzard_id"`
 }
 
 type UserDao struct {
-	client *elastic.Client
-	index  string
+	client    *elastic.Client
+	sqlClient *sqlx.DB
+	index     string
 }
 
 func NewUserDao(client *elastic.Client) *UserDao {
-	return &UserDao{client, "ow"}
+	return &UserDao{client, nil, "ow"}
 }
 
 func (u *UserDao) GetByID(ctx context.Context, id int) (User, error) {

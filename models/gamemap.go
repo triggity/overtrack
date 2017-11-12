@@ -5,25 +5,27 @@ import (
 	"errors"
 	"reflect"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/triggity/overtrack/errs"
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
 // GameMap represents a game map
 type GameMap struct {
-	Name     string   `json:"name"`
-	FullName string   `json:"full_name"`
-	City     string   `json:"city"`
-	Country  string   `json:"country"`
-	GameType GameType `json:"game_type"`
+	Name     string   `json:"name",db:"name"`
+	FullName string   `json:"full_name",db:"full_name"`
+	City     string   `json:"city",db:"city"`
+	Country  string   `json:"country",db:"country"`
+	GameType GameType `json:"game_type",db:"game_type"`
 }
 
 type GameMapDao struct {
-	client *elastic.Client
+	client    *elastic.Client
+	sqlClient *sqlx.DB
 }
 
 func NewGameMapDao(client *elastic.Client) *GameMapDao {
-	return &GameMapDao{client}
+	return &GameMapDao{client, nil}
 }
 
 func (g *GameMapDao) GetByName(ctx context.Context, name string) (GameMap, error) {
