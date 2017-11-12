@@ -2,7 +2,9 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/jmoiron/sqlx"
 
@@ -12,8 +14,16 @@ import (
 )
 
 var (
-	address = flag.String("address", ":8000", "address to listen on")
+	address = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8080")), "address to listen on")
 )
+
+func getEnv(key string, backup string) string {
+	value, ok := os.LookupEnv(key)
+	if !ok {
+		return backup
+	}
+	return value
+}
 
 func main() {
 	flag.Parse()
