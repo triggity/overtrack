@@ -9,7 +9,6 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
-	"github.com/triggity/overtrack"
 )
 
 var (
@@ -24,7 +23,7 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	overtrack.Server(r, nil, db)
+	Server(r, nil, db)
 	w := log.New().Writer()
 	defer w.Close()
 	loggedHandler := handlers.LoggingHandler(w, r)
