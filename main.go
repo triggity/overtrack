@@ -17,8 +17,9 @@ import (
 )
 
 var (
-	address = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8000")), "address to listen on")
-	dbURL   = flag.String("dbUrl", getEnv("DATABASE_URL", "postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable"), "database connection string")
+	address        = flag.String("address", fmt.Sprintf(":%s", getEnv("PORT", "8000")), "address to listen on")
+	dbURL          = flag.String("dbUrl", getEnv("DATABASE_URL", "postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable"), "database connection string")
+	migrationsPath = flag.String("migrations", getEnv("MIGRATIONS_PATH", "migrations"), "path to migrations folder")
 )
 
 func getEnv(key string, backup string) string {
@@ -41,7 +42,7 @@ func getDB() *sqlx.DB {
 		log.Panic(err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
-		"file://migrations",
+		fmt.Sprint("file://%s", *migrationsPath),
 		"postgres", driver)
 
 	if err != nil {
