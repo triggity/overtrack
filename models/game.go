@@ -20,7 +20,7 @@ type Game struct {
 	EndSR       sql.NullInt64 `json:"end_sr,omit_empty" db:"end_sr"`
 	BeginSR     sql.NullInt64 `json:"begin_sr,omit_empty" db:"begin_sr"`
 	Result      Result        `json:"result,string" db:"result"`
-	Characters  []HeroResult  `json:"-"`
+	Characters  []HeroResult  `json:"characters"`
 	Stats       Stats         `json:"stats" db:"stats"`
 	Disconnect  bool          `json:"disconnected" db:"disconnected"`
 	Leavers     int           `json:"leavers" db:"leavers"`
@@ -79,6 +79,11 @@ func (g *GameController) GetByGame(userId int, gameId int) (Game, error) {
 		g.logger.Infof("failed to get game stats for game %d for user %d", gameId, userId, err)
 		return game, err
 	}
+	heroStats, err := g.getHeroStatsByID(userId, gameId)
+	if err != nil {
+		g.logger.Infof("failed to get hero stats for game %d for user %d", gameId, userId, err)
+		return game, err
+	}
 
 	game.ID = aux.ID
 	game.UserID = aux.UserID
@@ -98,6 +103,8 @@ func (g *GameController) GetByGame(userId int, gameId int) (Game, error) {
 	game.Disconnect = aux.Disconnect
 	game.Leavers = aux.Leavers
 	game.Stats = gameStats
+	game.Characters = heroStats
+
 	return game, nil
 }
 func (g *GameController) getMapByID(gameId int) (GameMap, error) {

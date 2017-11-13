@@ -1,5 +1,6 @@
 CREATE TABLE hero_stats (
     id SERIAL,
+    user_id integer NOT NULL,
     game_id integer NOT NULL,
     hero_id integer NOT NULL,
     eliminations integer,
