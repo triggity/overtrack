@@ -11,7 +11,7 @@ import (
 )
 
 type GameMapsHandler struct {
-	dao *models.GameMapDao
+	dao *models.GameMapController
 }
 
 func NewGameTypesHandler(db *sqlx.DB) *GameMapsHandler {

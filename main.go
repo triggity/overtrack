@@ -48,6 +48,7 @@ func getDB() *sqlx.DB {
 	if err != nil {
 		log.Panic(err)
 	}
+	log.Info("running migrations")
 	err = m.Up()
 	if err != nil && err != migrate.ErrNoChange {
 		log.Panic(err)

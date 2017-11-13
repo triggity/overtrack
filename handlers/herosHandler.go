@@ -11,7 +11,7 @@ import (
 )
 
 type HerosHandler struct {
-	dao *models.HeroDao
+	dao *models.HeroController
 }
 
 func NewHerosHandler(db *sqlx.DB) *HerosHandler {

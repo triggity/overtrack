@@ -13,7 +13,7 @@ import (
 )
 
 type UserHandler struct {
-	dao *models.UserDao
+	dao *models.UserController
 }
 
 func NewUserHandler(db *sqlx.DB) *UserHandler {

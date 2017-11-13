@@ -16,21 +16,21 @@ func (s *Stats) CoreStats() *Stats {
 	return s
 }
 
-type StatsDao struct {
+type StatsController struct {
 	db *sqlx.DB
 }
 
-func NewStatsDao(sqlClient *sqlx.DB) *StatsDao {
-	return &StatsDao{sqlClient}
+func NewStatsController(sqlClient *sqlx.DB) *StatsController {
+	return &StatsController{sqlClient}
 }
 
-func (s *StatsDao) GetByGame(userId int, gameId int) (Stats, error) {
+func (s *StatsController) GetByGame(userId int, gameId int) (Stats, error) {
 	stats := Stats{}
 	err := s.db.Get(&stats, "SELECT * FROM game_stats WHERE user_id=$1 AND game_id=$2 LIMIT 1", userId, gameId)
 	return stats, err
 }
 
-func (s *StatsDao) GetByUser(userId int) ([]Stats, error) {
+func (s *StatsController) GetByUser(userId int) ([]Stats, error) {
 	stats := []Stats{}
 	err := s.db.Select(&stats, "SELECT * FROM game_stats WHERE user_id=$1", userId)
 	return stats, err

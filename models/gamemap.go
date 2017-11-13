@@ -14,21 +14,21 @@ type GameMap struct {
 	GameType GameType `json:"game_type" db:"game_type"`
 }
 
-type GameMapDao struct {
+type GameMapController struct {
 	db *sqlx.DB
 }
 
-func NewGameMapDao(db *sqlx.DB) *GameMapDao {
-	return &GameMapDao{db}
+func NewGameMapDao(db *sqlx.DB) *GameMapController {
+	return &GameMapController{db}
 }
 
-func (g *GameMapDao) GetByName(name string) (GameMap, error) {
+func (g *GameMapController) GetByName(name string) (GameMap, error) {
 	gameMap := GameMap{}
 	err := g.db.Get(&gameMap, "SELECT * FROM maps WHERE name=$1 LIMIT 1", name)
 	return gameMap, err
 }
 
-func (g *GameMapDao) List() ([]GameMap, error) {
+func (g *GameMapController) List() ([]GameMap, error) {
 	gameMaps := []GameMap{}
 	err := g.db.Select(&gameMaps, "SELECT * FROM maps")
 	return gameMaps, err

@@ -11,12 +11,12 @@ import (
 )
 
 type GameHandler struct {
-	dao *models.GameDao
+	dao *models.GameController
 }
 
 func NewGameHandler(db *sqlx.DB) *GameHandler {
 	return &GameHandler{
-		models.NewGameDao(db),
+		models.NewGameController(db),
 	}
 }
 
