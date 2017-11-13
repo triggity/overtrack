@@ -19,14 +19,14 @@ func NewHeroDao(sqlClient *sqlx.DB) *HeroDao {
 	return &HeroDao{sqlClient, "heros"}
 }
 
-func (h *HeroDao) GetHero(name string) (Hero, error) {
+func (h *HeroDao) GetHero(id int) (Hero, error) {
 	hero := Hero{}
-	err := h.db.Get("SELECT * FROM ? WHERE name=? LIMIT 1;", h.tableName, name)
+	err := h.db.Get(&hero, "SELECT * FROM heros WHERE id=$1 LIMIT 1", id)
 	return hero, err
 }
 
-func (h *HeroDao) GetHeros() ([]Hero, error) {
+func (h *HeroDao) List() ([]Hero, error) {
 	heros := []Hero{}
-	err := h.db.Select("SELECT * FROM ?;", h.tableName)
+	err := h.db.Select(&heros, "SELECT * FROM heros")
 	return heros, err
 }

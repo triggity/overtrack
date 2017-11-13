@@ -13,7 +13,7 @@ const (
 	Attack HeroClass = iota
 	Defense
 	Tank
-	Suppport
+	Support
 )
 
 func (h *HeroClass) Scan(value interface{}) error {

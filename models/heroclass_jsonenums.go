@@ -9,17 +9,17 @@ import (
 
 var (
 	_HeroClassNameToValue = map[string]HeroClass{
-		"Attack":   Attack,
-		"Defense":  Defense,
-		"Tank":     Tank,
-		"Suppport": Suppport,
+		"Attack":  Attack,
+		"Defense": Defense,
+		"Tank":    Tank,
+		"Support": Support,
 	}
 
 	_HeroClassValueToName = map[HeroClass]string{
-		Attack:   "Attack",
-		Defense:  "Defense",
-		Tank:     "Tank",
-		Suppport: "Suppport",
+		Attack:  "Attack",
+		Defense: "Defense",
+		Tank:    "Tank",
+		Support: "Support",
 	}
 )
 
@@ -27,10 +27,10 @@ func init() {
 	var v HeroClass
 	if _, ok := interface{}(v).(fmt.Stringer); ok {
 		_HeroClassNameToValue = map[string]HeroClass{
-			interface{}(Attack).(fmt.Stringer).String():   Attack,
-			interface{}(Defense).(fmt.Stringer).String():  Defense,
-			interface{}(Tank).(fmt.Stringer).String():     Tank,
-			interface{}(Suppport).(fmt.Stringer).String(): Suppport,
+			interface{}(Attack).(fmt.Stringer).String():  Attack,
+			interface{}(Defense).(fmt.Stringer).String(): Defense,
+			interface{}(Tank).(fmt.Stringer).String():    Tank,
+			interface{}(Support).(fmt.Stringer).String(): Support,
 		}
 	}
 }

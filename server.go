@@ -16,6 +16,7 @@ func Server(router *mux.Router, db *sqlx.DB) {
 	mapsHandler := handlers.NewGameTypesHandler(db)
 	userHandler := handlers.NewUserHandler(db)
 	gameHandler := handlers.NewGameHandler(db)
+	herosHandler := handlers.NewHerosHandler(db)
 
 	routes := []struct {
 		Route   string
@@ -29,6 +30,8 @@ func Server(router *mux.Router, db *sqlx.DB) {
 		{"/v1/users", userHandler.List, "getUsers"},
 		{"/v1/users/{id}", userHandler.GetByName, "getUser"},
 		{"/v1/users/{id}/games", gameHandler.GetByUser, "getGames"},
+		{"/v1/heros", herosHandler.List, "getHeros"},
+		{"/v1/heros/{id}", herosHandler.GetByID, "getHero"},
 	}
 	for _, r := range routes {
 		router.HandleFunc(r.Route, prometheus.InstrumentHandlerFunc(r.Name, r.Handler))

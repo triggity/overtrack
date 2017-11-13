@@ -4,9 +4,9 @@ package models
 
 import "fmt"
 
-const _HeroClass_name = "AttackDefenseTankSuppport"
+const _HeroClass_name = "AttackDefenseTankSupport"
 
-var _HeroClass_index = [...]uint8{0, 6, 13, 17, 25}
+var _HeroClass_index = [...]uint8{0, 6, 13, 17, 24}
 
 func (i HeroClass) String() string {
 	if i >= HeroClass(len(_HeroClass_index)-1) {
