@@ -1,7 +1,7 @@
 CREATE TYPE game_result as ENUM ('win', 'loss', 'draw');
 
 CREATE TABLE games (
-    id integer NOT NULL unique,
+    id SERIAL,
     user_id integer NOT NULL,
     map_id integer NOT NULL,
     result game_result,
