@@ -13,13 +13,9 @@ type GameType uint8
 const (
 	Escort GameType = iota
 	Assault
-	Hyrbid
+	Hybrid
 	Control
 )
-
-func ParseGameType(data string) (GameType, error) {
-	return Escort, nil
-}
 
 func (g *GameType) Scan(value interface{}) error {
 	// aux := GameType()

@@ -11,14 +11,14 @@ var (
 	_GameTypeNameToValue = map[string]GameType{
 		"Escort":  Escort,
 		"Assault": Assault,
-		"Hyrbid":  Hyrbid,
+		"Hybrid":  Hybrid,
 		"Control": Control,
 	}
 
 	_GameTypeValueToName = map[GameType]string{
 		Escort:  "Escort",
 		Assault: "Assault",
-		Hyrbid:  "Hyrbid",
+		Hybrid:  "Hybrid",
 		Control: "Control",
 	}
 )
@@ -29,7 +29,7 @@ func init() {
 		_GameTypeNameToValue = map[string]GameType{
 			interface{}(Escort).(fmt.Stringer).String():  Escort,
 			interface{}(Assault).(fmt.Stringer).String(): Assault,
-			interface{}(Hyrbid).(fmt.Stringer).String():  Hyrbid,
+			interface{}(Hybrid).(fmt.Stringer).String():  Hybrid,
 			interface{}(Control).(fmt.Stringer).String(): Control,
 		}
 	}

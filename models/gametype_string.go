@@ -4,7 +4,7 @@ package models
 
 import "fmt"
 
-const _GameType_name = "EscortAssaultHyrbidControl"
+const _GameType_name = "EscortAssaultHybridControl"
 
 var _GameType_index = [...]uint8{0, 6, 13, 19, 26}
 
