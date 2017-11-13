@@ -9,8 +9,8 @@ import (
 type Game struct {
 	UserID      int               `json:"user_id" db:"user_id"`
 	Map         string            `json:"map" db:"map"`
-	StartTime   time.Time         `json:"start_time,string" db:"start_time"`
-	GameType    GameType          `json:"game_type, string" db:"game_type"`
+	StartTime   time.Time         `json:"start_time" db:"start_time"`
+	GameType    GameType          `json:"game_type" db:"game_type"`
 	GroupSize   int               `json:"group_size" db:"group_size"`
 	isPlacement bool              `json:"is_placement" db:"is_placement"`
 	Season      int               `json:"season" db:"season"`

@@ -9,6 +9,11 @@ endif
 	@touch $(MIGRATIONS_FOLDER)/$(TIME)_$(NAME).up.sql
 	@touch $(MIGRATIONS_FOLDER)/$(TIME)_$(NAME).down.sql
 
-.PHONY: foo
-foo:
-	echo "foo"
+GENERATED := GameType HeroClass Result
+
+$(GENERATED): %:
+	cd models && stringer -type=$@
+	cd models && jsonenums -type=$@
+
+.PHONY: generate
+generate: $(GENERATED)

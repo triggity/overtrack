@@ -6,7 +6,7 @@ import (
 
 // GameMap represents a game map
 type GameMap struct {
-	ID       int      `db:"id"`
+	ID       int      `json:"id" db:"id"`
 	Name     string   `json:"name" db:"name"`
 	FullName string   `json:"full_name" db:"full_name"`
 	City     string   `json:"city" db:"city"`

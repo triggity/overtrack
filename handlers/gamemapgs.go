@@ -29,7 +29,10 @@ func (g *GameMapsHandler) List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	s, _ := json.Marshal(maps)
+	out := struct {
+		Maps []models.GameMap `json:"maps"`
+	}{maps}
+	s, _ := json.Marshal(out)
 	w.Write([]byte(s))
 }
 
@@ -42,6 +45,9 @@ func (g *GameMapsHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	s, _ := json.Marshal(maps)
+	out := struct {
+		Map models.GameMap `json:"map"`
+	}{maps}
+	s, _ := json.Marshal(out)
 	w.Write([]byte(s))
 }
