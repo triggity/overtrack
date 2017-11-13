@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
@@ -38,7 +39,13 @@ func (g *GameMapsHandler) List(w http.ResponseWriter, r *http.Request) {
 
 func (g *GameMapsHandler) GetByName(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	maps, err := g.dao.GetByName(vars["name"])
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		return
+	}
+	maps, err := g.dao.GetByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))

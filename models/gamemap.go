@@ -22,9 +22,9 @@ func NewGameMapDao(db *sqlx.DB) *GameMapController {
 	return &GameMapController{db}
 }
 
-func (g *GameMapController) GetByName(name string) (GameMap, error) {
+func (g *GameMapController) GetByID(gameId int) (GameMap, error) {
 	gameMap := GameMap{}
-	err := g.db.Get(&gameMap, "SELECT * FROM maps WHERE name=$1 LIMIT 1", name)
+	err := g.db.Get(&gameMap, "SELECT * FROM maps WHERE name=$1 LIMIT 1", gameId)
 	return gameMap, err
 }
 

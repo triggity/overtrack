@@ -26,10 +26,11 @@ func Server(router *mux.Router, db *sqlx.DB) {
 		{"/", handlers.Home, "home"},
 		{"/version", handlers.Version, "version"},
 		{"/v1/maps", mapsHandler.List, "getMaps"},
-		{"/v1/maps/{name}", mapsHandler.GetByName, "getMap"},
+		{"/v1/maps/{id}", mapsHandler.GetByName, "getMap"},
 		{"/v1/users", userHandler.List, "getUsers"},
 		{"/v1/users/{id}", userHandler.GetByName, "getUser"},
 		{"/v1/users/{id}/games", gameHandler.GetByUser, "getGames"},
+		{"/v1/users/{user}/games/{id}", gameHandler.GetGame, "getGame"},
 		{"/v1/heros", herosHandler.List, "getHeros"},
 		{"/v1/heros/{id}", herosHandler.GetByID, "getHero"},
 	}
